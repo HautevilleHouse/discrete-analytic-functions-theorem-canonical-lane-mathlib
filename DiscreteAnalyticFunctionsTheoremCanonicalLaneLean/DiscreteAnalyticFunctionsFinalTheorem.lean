@@ -1,0 +1,32 @@
+import canonicalLaneMathlib.AdmissibleClass
+import DiscreteAnalyticFunctionsTheoremCanonicalLaneLean.DiscreteHarmonicExtension
+import DiscreteAnalyticFunctionsTheoremCanonicalLaneLean.DiscreteHolomorphicStructure
+import DiscreteAnalyticFunctionsTheoremCanonicalLaneLean.DiscreteLaplacianKernel
+import DiscreteAnalyticFunctionsTheoremCanonicalLaneLean.DiscreteMeanValueProperty
+import DiscreteAnalyticFunctionsTheoremCanonicalLaneLean.DiscreteRiemannMappingTheorem
+import DiscreteAnalyticFunctionsTheoremCanonicalLaneLean.DiscreteAnalyticContinuation
+
+namespace HautevilleHouse
+namespace DiscreteAnalyticFunctionsTheoremCanonicalLaneLean
+
+def ConstrainedDiscreteAnalyticClosure (A : AdmissibleClass) : Prop :=
+  bridgeClosed A ∧ gateClosed A ∧
+  DiscreteHarmonicExtensionClosed discreteHarmonicExtensionCertificate ∧
+  DiscreteHolomorphicStructureClosed discreteHolomorphicStructureCertificate ∧
+  DiscreteLaplacianKernelClosed discreteLaplacianKernelCertificate ∧
+  DiscreteMeanValuePropertyClosed discreteMeanValuePropertyCertificate ∧
+  DiscreteRiemannMappingTheoremClosed discreteRiemannMappingTheoremCertificate ∧
+  DiscreteAnalyticContinuationClosed discreteAnalyticContinuationCertificate
+
+theorem discrete_analytic_endgame (A : AdmissibleClass) :
+    ConstrainedDiscreteAnalyticClosure A := by
+  refine And.intro (bridge_from_admissible_class A) (And.intro (gate_from_admissible_class A) ?_)
+  refine And.intro discrete_harmonic_extension_closed_checked
+    (And.intro discrete_holomorphic_structure_closed_checked
+    (And.intro discrete_laplacian_kernel_closed_checked
+    (And.intro discrete_mean_value_property_closed_checked
+    (And.intro discrete_riemann_mapping_theorem_closed_checked
+      discrete_analytic_continuation_closed_checked))))
+
+end DiscreteAnalyticFunctionsTheoremCanonicalLaneLean
+end HautevilleHouse
